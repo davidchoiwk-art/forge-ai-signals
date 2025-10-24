@@ -47,6 +47,22 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        invest: {
+          DEFAULT: "hsl(var(--invest))",
+          glow: "hsl(var(--invest-glow))",
+        },
+        watch: {
+          DEFAULT: "hsl(var(--watch))",
+          glow: "hsl(var(--watch-glow))",
+        },
+        hold: {
+          DEFAULT: "hsl(var(--hold))",
+          glow: "hsl(var(--hold-glow))",
+        },
+        sell: {
+          DEFAULT: "hsl(var(--sell))",
+          glow: "hsl(var(--sell-glow))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -57,6 +73,17 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      backgroundImage: {
+        'gradient-hero': 'var(--gradient-hero)',
+        'gradient-card': 'var(--gradient-card)',
+      },
+      boxShadow: {
+        'glow': 'var(--shadow-glow)',
+        'invest': 'var(--shadow-invest)',
+        'watch': 'var(--shadow-watch)',
+        'hold': 'var(--shadow-hold)',
+        'sell': 'var(--shadow-sell)',
       },
       borderRadius: {
         lg: "var(--radius)",
