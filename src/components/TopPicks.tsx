@@ -1,5 +1,7 @@
 import { StockCard } from "./StockCard";
 import { SearchFilters } from "./SearchFilters";
+import { Watchlist } from "./Watchlist";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 const mockStocks = [
   {
@@ -53,33 +55,50 @@ export const TopPicks = () => {
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-8">
-          <h2 className="text-4xl font-bold text-foreground mb-4">
-            Today's Top 5 AI Picks
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Our AI has analyzed millions of signals to bring you these actionable recommendations. Updated daily at market close.
-          </p>
-        </div>
+        <Tabs defaultValue="top-picks" className="w-full">
+          <TabsList className="mb-8 w-full justify-center bg-muted/50">
+            <TabsTrigger value="top-picks" className="text-lg">
+              Top 5 AI Picks
+            </TabsTrigger>
+            <TabsTrigger value="watchlist" className="text-lg">
+              Watchlist
+            </TabsTrigger>
+          </TabsList>
 
-        <div className="max-w-4xl mx-auto mb-12">
-          <SearchFilters />
-        </div>
+          <TabsContent value="top-picks">
+            <div className="text-center mb-8">
+              <h2 className="text-4xl font-bold text-foreground mb-4">
+                Today's Top 5 AI Picks
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                Our AI has analyzed millions of signals to bring you these actionable recommendations. Updated daily at market close.
+              </p>
+            </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {mockStocks.map((stock) => (
-            <StockCard key={stock.ticker} {...stock} />
-          ))}
-        </div>
+            <div className="max-w-4xl mx-auto mb-12">
+              <SearchFilters />
+            </div>
 
-        <div className="mt-12 text-center">
-          <p className="text-sm text-muted-foreground">
-            Want unlimited access, advanced analytics, and custom alerts?
-          </p>
-          <a href="#pricing" className="text-primary hover:text-primary/80 font-semibold mt-2 inline-block">
-            Upgrade to Pro for $25/month →
-          </a>
-        </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+              {mockStocks.map((stock) => (
+                <StockCard key={stock.ticker} {...stock} />
+              ))}
+            </div>
+
+            <div className="mt-12 text-center">
+              <p className="text-sm text-muted-foreground">
+                Want unlimited access, advanced analytics, and custom alerts?
+              </p>
+              <a href="#pricing" className="text-primary hover:text-primary/80 font-semibold mt-2 inline-block">
+                Upgrade to Pro for $25/month →
+              </a>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="watchlist">
+            <Watchlist />
+          </TabsContent>
+        </Tabs>
       </div>
     </section>
   );
