@@ -12,13 +12,13 @@ export const Disclaimer = () => {
                 Important Legal Disclaimer
               </p>
               <p>
-                Forge.AI is not a registered investment advisor. The information provided on this platform is for informational and educational purposes only and does not constitute financial advice, investment recommendations, or an offer to buy or sell securities.
+                NeuralStreet is not a registered investment advisor. The information provided on this platform is for informational and educational purposes only and does not constitute financial advice, investment recommendations, or an offer to buy or sell securities.
               </p>
               <p>
                 All users acknowledge they are making independent investment decisions. Past performance does not guarantee future results. Stock market investments carry inherent risks, including the potential loss of principal.
               </p>
               <p>
-                Data and predictions provided by Forge.AI may not reflect actual market outcomes. Users should conduct their own research and consult with licensed financial professionals before making investment decisions.
+                Data and predictions provided by NeuralStreet may not reflect actual market outcomes. Users should conduct their own research and consult with licensed financial professionals before making investment decisions.
               </p>
             </div>
           </div>

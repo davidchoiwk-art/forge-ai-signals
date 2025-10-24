@@ -21,7 +21,7 @@ export const Hero = () => {
           </h1>
           
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Forge.AI analyzes millions of data points from Reddit, X, insider trades, and market volumes to deliver actionable stock recommendations every day.
+            NeuralStreet analyzes millions of data points from Reddit, X, insider trades, and market volumes to deliver actionable stock recommendations every day.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">

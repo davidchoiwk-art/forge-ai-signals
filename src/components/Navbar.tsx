@@ -8,7 +8,7 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
             <TrendingUp className="w-8 h-8 text-primary" />
-            <span className="text-2xl font-bold text-foreground">Forge.AI</span>
+            <span className="text-2xl font-bold text-foreground">NeuralStreet</span>
           </div>
           
           <div className="hidden md:flex items-center gap-8">

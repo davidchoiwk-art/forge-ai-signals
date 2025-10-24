@@ -1,4 +1,5 @@
 import { StockCard } from "./StockCard";
+import { SearchFilters } from "./SearchFilters";
 
 const mockStocks = [
   {
@@ -52,13 +53,17 @@ export const TopPicks = () => {
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <h2 className="text-4xl font-bold text-foreground mb-4">
             Today's Top 5 AI Picks
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Our AI has analyzed millions of signals to bring you these actionable recommendations. Updated daily at market close.
           </p>
+        </div>
+
+        <div className="max-w-4xl mx-auto mb-12">
+          <SearchFilters />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
