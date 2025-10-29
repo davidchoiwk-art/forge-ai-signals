@@ -16,6 +16,8 @@ const mockStocks = [
     signal: "invest" as const,
     volume: "142M",
     sentiment: "Bullish",
+    industry: "Technology",
+    description: "Leader in GPUs and AI compute; strong data center demand and platform ecosystem momentum.",
   },
   {
     ticker: "TSLA",
@@ -25,6 +27,8 @@ const mockStocks = [
     signal: "watch" as const,
     volume: "89M",
     sentiment: "Mixed",
+    industry: "Automotive",
+    description: "EV leader scaling energy and autonomy; margins volatile amid pricing and competition.",
   },
   {
     ticker: "MSFT",
@@ -34,6 +38,8 @@ const mockStocks = [
     signal: "hold" as const,
     volume: "54M",
     sentiment: "Neutral",
+    industry: "Technology",
+    description: "Cloud and AI Copilot tailwinds; durable enterprise demand supports multi-year growth.",
   },
   {
     ticker: "META",
@@ -43,6 +49,8 @@ const mockStocks = [
     signal: "invest" as const,
     volume: "78M",
     sentiment: "Bullish",
+    industry: "Technology",
+    description: "Reels monetization, AI-driven ads, and efficiency focus; Reality Labs is a wildcard.",
   },
   {
     ticker: "COIN",
@@ -52,6 +60,8 @@ const mockStocks = [
     signal: "sell" as const,
     volume: "23M",
     sentiment: "Bearish",
+    industry: "Finance",
+    description: "Crypto cycle exposure; regulatory overhang and fee compression risks remain elevated.",
   },
 ];
 

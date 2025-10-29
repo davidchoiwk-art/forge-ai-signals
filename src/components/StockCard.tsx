@@ -13,6 +13,8 @@ interface StockCardProps {
   signal: Signal;
   volume: string;
   sentiment: string;
+  industry?: string;
+  description?: string;
 }
 
 const signalConfig = {
@@ -46,6 +48,8 @@ export const StockCard = ({
   signal,
   volume,
   sentiment,
+  industry,
+  description,
 }: StockCardProps) => {
   const navigate = useNavigate();
   const config = signalConfig[signal];
@@ -61,7 +65,7 @@ export const StockCard = ({
       onClick={handleClick}
     >
       <CardContent className="p-6">
-        <div className="flex items-start justify-between mb-4">
+        <div className="flex items-start justify-between mb-2">
           <div>
             <h3 className="text-2xl font-bold text-foreground mb-1">{ticker}</h3>
             <p className="text-sm text-muted-foreground">{company}</p>
@@ -70,6 +74,21 @@ export const StockCard = ({
             {config.label}
           </Badge>
         </div>
+
+        {(industry || description) && (
+          <div className="mb-4">
+            {industry && (
+              <Badge variant="outline" className="text-xs mr-2 align-middle">
+                {industry}
+              </Badge>
+            )}
+            {description && (
+              <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
+                {description}
+              </p>
+            )}
+          </div>
+        )}
 
         <div className="flex items-end justify-between mb-4">
           <div>
