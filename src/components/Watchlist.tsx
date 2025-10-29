@@ -1,9 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { StockCard } from "./StockCard";
-import { Plus, Pencil, Trash2, Check, X } from "lucide-react";
+import { StockBrowser } from "./StockBrowser";
+import { Plus, Pencil, Trash2, Check, X, Search, Lock, Crown } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 interface WatchlistItem {
   id: string;
@@ -20,6 +25,8 @@ interface WatchlistItem {
 }
 
 export const Watchlist = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [watchlists, setWatchlists] = useState<WatchlistItem[]>([
     {
       id: "1",
@@ -84,6 +91,74 @@ export const Watchlist = () => {
     setEditingId(null);
     setEditingName("");
   };
+
+  const addStockToWatchlist = (stock: any) => {
+    setWatchlists(
+      watchlists.map((w) =>
+        w.id === activeWatchlist
+          ? { ...w, stocks: [...w.stocks, stock] }
+          : w
+      )
+    );
+  };
+
+  const removeStockFromWatchlist = (ticker: string) => {
+    setWatchlists(
+      watchlists.map((w) =>
+        w.id === activeWatchlist
+          ? { ...w, stocks: w.stocks.filter((s) => s.ticker !== ticker) }
+          : w
+      )
+    );
+  };
+
+  const getCurrentWatchlistTickers = () => {
+    const currentWatchlist = watchlists.find((w) => w.id === activeWatchlist);
+    return currentWatchlist ? currentWatchlist.stocks.map((s) => s.ticker) : [];
+  };
+
+  const handleUpgrade = () => {
+    navigate('/subscribe');
+  };
+
+  // Show subscription prompt for non-subscribers
+  if (!user?.isSubscribed) {
+    return (
+      <div className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <Card className="max-w-2xl mx-auto">
+            <CardHeader className="text-center">
+              <div className="mx-auto mb-4 w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                <Lock className="w-8 h-8 text-primary" />
+              </div>
+              <CardTitle className="text-2xl">Watchlists are Pro Features</CardTitle>
+              <p className="text-muted-foreground">
+                Create custom watchlists, track your favorite stocks, and get personalized alerts with a Pro subscription.
+              </p>
+            </CardHeader>
+            <CardContent className="text-center space-y-4">
+              <div className="space-y-2">
+                <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                  <Crown className="w-4 h-4" />
+                  <span>Pro features include:</span>
+                </div>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• Unlimited custom watchlists</li>
+                  <li>• Real-time price alerts</li>
+                  <li>• Advanced portfolio tracking</li>
+                  <li>• Personalized recommendations</li>
+                </ul>
+              </div>
+              <Button onClick={handleUpgrade} className="w-full" size="lg">
+                <Crown className="w-4 h-4 mr-2" />
+                Upgrade to Pro - $25/month
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -169,13 +244,63 @@ export const Watchlist = () => {
                 <p className="text-muted-foreground mb-4">
                   This watchlist is empty. Add stocks to track them here.
                 </p>
-                <Button variant="outline">Browse Stocks</Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" className="gap-2">
+                      <Search className="w-4 h-4" />
+                      Browse Stocks
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-6xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle>Add Stocks to Watchlist</DialogTitle>
+                    </DialogHeader>
+                    <StockBrowser 
+                      onAddToWatchlist={addStockToWatchlist}
+                      watchlistStocks={getCurrentWatchlistTickers()}
+                    />
+                  </DialogContent>
+                </Dialog>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {watchlist.stocks.map((stock) => (
-                  <StockCard key={stock.ticker} {...stock} />
-                ))}
+              <div className="space-y-6">
+                <div className="flex justify-between items-center">
+                  <h4 className="text-lg font-semibold text-foreground">
+                    {watchlist.stocks.length} stock{watchlist.stocks.length !== 1 ? 's' : ''} in this watchlist
+                  </h4>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" size="sm" className="gap-2">
+                        <Plus className="w-4 h-4" />
+                        Add More Stocks
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-6xl max-h-[80vh] overflow-y-auto">
+                      <DialogHeader>
+                        <DialogTitle>Add More Stocks to Watchlist</DialogTitle>
+                      </DialogHeader>
+                      <StockBrowser 
+                        onAddToWatchlist={addStockToWatchlist}
+                        watchlistStocks={getCurrentWatchlistTickers()}
+                      />
+                    </DialogContent>
+                  </Dialog>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {watchlist.stocks.map((stock) => (
+                    <div key={stock.ticker} className="relative group">
+                      <StockCard {...stock} />
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => removeStockFromWatchlist(stock.ticker)}
+                      >
+                        <X className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </TabsContent>

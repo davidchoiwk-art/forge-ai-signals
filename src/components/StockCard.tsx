@@ -1,6 +1,7 @@
 import { TrendingUp, TrendingDown, Activity } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
 
 type Signal = "invest" | "watch" | "hold" | "sell";
 
@@ -46,11 +47,19 @@ export const StockCard = ({
   volume,
   sentiment,
 }: StockCardProps) => {
+  const navigate = useNavigate();
   const config = signalConfig[signal];
   const isPositive = change >= 0;
 
+  const handleClick = () => {
+    navigate(`/company/${ticker}`);
+  };
+
   return (
-    <Card className={`bg-gradient-card border-border/50 backdrop-blur-sm transition-all duration-300 ${config.shadow}`}>
+    <Card 
+      className={`bg-gradient-card border-border/50 backdrop-blur-sm transition-all duration-300 ${config.shadow} cursor-pointer hover:scale-105`}
+      onClick={handleClick}
+    >
       <CardContent className="p-6">
         <div className="flex items-start justify-between mb-4">
           <div>

@@ -1,9 +1,33 @@
+import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Search, TrendingUp, Shield } from "lucide-react";
+import { AuthModal } from "./AuthModal";
 
 export const Hero = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
+  const scrollToTopPicks = () => {
+    const element = document.getElementById('top-picks-section');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleGetStarted = () => {
+    if (user) {
+      navigate('/subscribe');
+    } else {
+      setShowAuthModal(true);
+    }
+  };
+
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+    <>
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-gradient-hero opacity-50" />
       
       <div className="container mx-auto px-4 relative z-10">
@@ -25,13 +49,13 @@ export const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-glow px-8 py-6 text-lg">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-glow px-8 py-6 text-lg" onClick={handleGetStarted}>
               <TrendingUp className="mr-2 h-5 w-5" />
-              View Top 5 Picks
+              {user ? (user.isSubscribed ? 'View Dashboard' : 'Upgrade to Pro') : 'Get Started Free'}
             </Button>
-            <Button size="lg" variant="outline" className="border-border hover:bg-secondary px-8 py-6 text-lg">
+            <Button size="lg" variant="outline" className="border-border hover:bg-secondary px-8 py-6 text-lg" onClick={scrollToTopPicks}>
               <Search className="mr-2 h-5 w-5" />
-              Explore Platform
+              View Top 5 Picks
             </Button>
           </div>
 
@@ -52,5 +76,10 @@ export const Hero = () => {
         </div>
       </div>
     </section>
+    
+    {showAuthModal && (
+      <AuthModal onClose={() => setShowAuthModal(false)} />
+    )}
+    </>
   );
 };
