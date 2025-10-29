@@ -92,8 +92,9 @@ export const StockCard = ({
 
         <div className="flex items-end justify-between mb-4">
           <div>
+            <p className="text-xs text-muted-foreground">Price per share</p>
             <p className="text-3xl font-bold text-foreground">${price.toFixed(2)}</p>
-            <div className="flex items-center gap-1 mt-1">
+            <div className="flex items-center gap-2 mt-1">
               {isPositive ? (
                 <TrendingUp className="w-4 h-4 text-invest" />
               ) : (
@@ -102,6 +103,7 @@ export const StockCard = ({
               <span className={`text-sm font-semibold ${isPositive ? "text-invest" : "text-sell"}`}>
                 {isPositive ? "+" : ""}{change.toFixed(2)}%
               </span>
+              <span className="text-xs text-muted-foreground">Daily change</span>
             </div>
           </div>
         </div>
